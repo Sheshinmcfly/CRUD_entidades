@@ -1,0 +1,80 @@
+<nav class="navbar navbar-light bg-dark">
+    <div class="container-fluid">
+        <h1 class="text-white">CRUD entidades</h1>
+
+        <div class="d-flex">
+            <button class="btn btn-primary" (click)="clickAgregarEntidad()" type="button" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">Agregar
+                entidad</button>
+        </div>
+    </div>
+</nav>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr class="text-center">
+            <th scope="col">ID</th>
+            <th scope="col">Nombre entidad</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Fecha creación</th>
+            <th scope="col">Porcentaje comisión</th>
+            <th scope="col">Activo</th>
+            <th scope="col">Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="text-center" *ngFor="let row of entidadData">
+            <td>{{row.id}}</td>
+            <td>{{row.nombre}}</td>
+            <td>{{row.correo}}</td>
+            <td>{{row.fecha}}</td>
+            <td>{{row.porcentaje}}</td>
+            <td>{{row.activo}}</td>
+            <td>
+                <button class="btn btn-warning mx-3" (click)="editarEntidad(row)" type="button" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">Editar</button>
+                <button class="btn btn-danger" (click)="deleteEntidad(row)">Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva entidad</h5>
+                <button type="button" class="btn text-white" data-bs-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formValue">
+                    <div class="mb-3">
+                        <label for="Nombre" class="form-label">Nombre entidad</label>
+                        <input type="text" formControlName="nombre" class="form-control" id="Nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Correo" class="form-label">Correo</label>
+                        <input type="email" formControlName="correo" class="form-control" id="Correo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Porcentaje" class="form-label">Porcentaje de comisión</label>
+                        <input type="text" formControlName="porcentaje" class="form-control" id="Porcentaje">
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" formControlName="activo" type="checkbox" role="switch" id="Activo"
+                        checked >
+                        <label class="form-check-label" for="Activo">Activo</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="Cancelar" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" *ngIf="mostrarAgregar" (click)="postNuevaEntidad()"
+                    class="btn btn-primary">Agregar</button>
+                <button type="button" *ngIf="mostrarActualizar" (click)="updateEntidad()"
+                    class="btn btn-primary">Actualizar</button>
+            </div>
+        </div>
+    </div>
+</div>
