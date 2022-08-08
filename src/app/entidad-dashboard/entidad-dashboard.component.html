@@ -61,7 +61,7 @@
                         <label for="Porcentaje" class="form-label">Porcentaje de comisión</label>
                         <input type="text" formControlName="porcentaje" class="form-control" id="Porcentaje">
                     </div>
-                    <div class="form-check form-switch">
+                    <div *ngIf="mostrarActivo" class="form-check form-switch">
                         <input class="form-check-input" formControlName="activo" type="checkbox" role="switch" id="Activo"
                         checked >
                         <label class="form-check-label" for="Activo">Activo</label>

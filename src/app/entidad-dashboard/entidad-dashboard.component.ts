@@ -14,6 +14,7 @@ export class EntidadDashboardComponent implements OnInit {
   entidadData !: any;
   mostrarAgregar !: boolean;
   mostrarActualizar !: boolean;
+  mostrarActivo !: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,23 +42,17 @@ export class EntidadDashboardComponent implements OnInit {
     this.formValue.reset();
     this.mostrarAgregar = true;
     this.mostrarActualizar = false;
-
-    if (!this.formValue.value.activo) {
-      this.formValue.controls['activo'].setValue(this.entidadModelObj.activo);
-    }
+    this.mostrarActivo = false;
   }
 
   // Crea una entidad.
   postNuevaEntidad() {
 
-    if (!this.formValue.value.activo) {
-      this.formValue.controls['activo'].setValue(this.entidadModelObj.activo);
-    }
-
+    this.entidadModelObj.id = 0;
     this.entidadModelObj.nombre = this.formValue.value.nombre;
     this.entidadModelObj.correo = this.formValue.value.correo;
     this.entidadModelObj.porcentaje = parseFloat(this.formValue.value.porcentaje);
-    this.entidadModelObj.activo = this.formValue.value.activo;
+    this.entidadModelObj.activo = true;
 
     this.api.postEntidad(this.entidadModelObj)
       .subscribe(() => {
@@ -91,6 +86,8 @@ export class EntidadDashboardComponent implements OnInit {
 
     this.mostrarAgregar = false;
     this.mostrarActualizar = true;
+    this.mostrarActivo = true;
+
     this.entidadModelObj.id = row.id;
     this.formValue.controls['nombre'].setValue(row.nombre);
     this.formValue.controls['correo'].setValue(row.correo);
@@ -101,10 +98,6 @@ export class EntidadDashboardComponent implements OnInit {
 
   //Actualiza una entidad.
   updateEntidad() {
-
-    if (!this.formValue.value.activo) {
-      this.formValue.value.activo = false;
-    }
 
     this.entidadModelObj.nombre = this.formValue.value.nombre;
     this.entidadModelObj.correo = this.formValue.value.correo;
